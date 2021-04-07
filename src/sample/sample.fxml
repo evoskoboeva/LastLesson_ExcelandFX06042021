@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?scenebuilder-stylesheet fullStructureCSS.css?>
+
+<GridPane alignment="center" hgap="10" prefHeight="239.0" prefWidth="353.0" stylesheets="@../sample/fullStructureCSS.css" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <TableView fx:id="tableView" prefHeight="200.0" prefWidth="353.0" />
+      <Button fx:id="btnLoad" mnemonicParsing="false" onAction="#Load" text="Load" GridPane.rowIndex="1" />
+   </children>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+</GridPane>
