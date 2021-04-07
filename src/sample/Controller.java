@@ -49,43 +49,6 @@ public class Controller {
 
     }
 
-
-        public void export(TableView<Item> tableView){
-
-
-
-
-        }
-
-
-    /*public void save(ActionEvent event) throws IOException {
-        ExcelFile file = new ExcelFile();
-        ExcelWorksheet worksheet = file.addWorksheet("sheet");
-        for (int row = 0; row < tableView.getItems().size(); row++) {
-           ObservableList cells = (ObservableList)tableView.getItems().get(row);
-            for (int column = 0; column < pricelist.indexOf(row); column++) {
-                if (cells.get(column) != null)
-
-            worksheet.getCell(row, column).setValue(cells.get(column).toString());
-
-        }
-        }
-        file.save("1.xls");
-    */   /* FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-              //  new FileChooser.ExtensionFilter("XLSX files (*.xlsx)", "*.xlsx"),
-                new FileChooser.ExtensionFilter("XLS files (*.xls)", "*.xls")
-              *//**//*  new FileChooser.ExtensionFilter("ODS files (*.ods)", "*.ods"),
-                new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv"),
-                new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html")
-        *//**//*);
-       *//* File saveFile = fileChooser.showSaveDialog(tableView.getScene().getWindow());
-
-        file.save(saveFile.getAbsolutePath());
-*/
-    //}
-
-
     public void Load() {
         Workbook wb = null;
         String filename = "price.xls";
