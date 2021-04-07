@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,7 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.swing.text.TabableView;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,21 +22,32 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Controller {
+    private ObservableList<Item> pricelist = FXCollections.observableArrayList();
 
     @FXML
-    public  TableView<Item> tableView;
+    private   TableView<Item> tableView;
 
     @FXML
-    TableColumn <Item, Integer> tableId;
-@FXML
-    TableColumn<Item, String> tableDescription;
-@FXML
-    TableColumn<Item,Double> tablePrice;
-    public static ArrayList<Item> pricelist = new ArrayList<Item>();
+    private TableColumn <Item, Integer> tableId;
+    @FXML
+    private TableColumn<Item, String> tableDescription;
+    @FXML
+    private TableColumn<Item,Double> tablePrice;
+
+    @FXML
+    private void initialize(ActionEvent actionEvent){
+        Load();
+        //pricelist.add(new Item(123,"qwerty",150));
+        tableId.setCellValueFactory(new PropertyValueFactory<Item,Integer>("id"));
+        tableDescription.setCellValueFactory(new PropertyValueFactory<Item,String>("title"));
+        tablePrice.setCellValueFactory(new PropertyValueFactory<Item,Double>("retailPrice"));
+        tableView.setItems(pricelist);
 
 
+    }
 
-    public void Load(ActionEvent actionEvent) {
+
+    public void Load() {
         Workbook wb = null;
         String filename = "price.xls";
         OPCPackage pkg = null;
@@ -61,15 +73,6 @@ public class Controller {
                 int id;
                 String title;
                 double retailPrice;
-                TableColumn<sample.Item,Integer> tableId = new TableColumn<>("id");
-                tableId.setCellValueFactory(new PropertyValueFactory<>("id"));
-                TableColumn<sample.Item,String> tableDescription = new TableColumn<>("title");
-                tableDescription.setCellValueFactory(new PropertyValueFactory<>("title"));
-                TableColumn<sample.Item,Double> tablePrice = new TableColumn<>("retaiPrice");
-                tablePrice.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
-                tableView.getColumns().add(tableId);
-                tableView.getColumns().add(tableDescription);
-                tableView.getColumns().add(tablePrice);
 
 
                 for (Sheet sheet : wb) {
@@ -80,22 +83,17 @@ public class Controller {
                             id = (int) cell.getNumericCellValue();
                             title = row.getCell(1).getStringCellValue();
                             retailPrice = row.getCell(2).getNumericCellValue();
-                            /*id = (int) cell.getNumericCellValue();
-                            title = row.getCell(1).getStringCellValue();
-                            retailPrice = row.getCell(2).getNumericCellValue();
-*/
 
                             item = new Item(id, title, retailPrice);
                             pricelist.add(item);
-                            tableView.getItems().addAll(pricelist);
-
-                            /*ObservableList<Item> observableList = FXCollections.observableArrayList(pricelist);
-                            observableList.remove(0);
-                            TableView <Item> tableView = new TableView<Item>(observableList);
-               */         }
+                            System.out.println(item);
+                        }
                     }
+
                 }
                 wb.close();
+
+
 
                 if (pkg != null) {
                     pkg.close();
@@ -106,7 +104,7 @@ public class Controller {
                 System.out.println(e.getLocalizedMessage());
             }
 
-            printList("\n-------------------- All Items --------------------\n", pricelist);
+            // printList("\n-------------------- All Items --------------------\n", pricelist);
 
 
            /*  printList("\n-------------------- Items with keyword: \"Adidas\" --------------------\n", SearchByTitle(pricelist, "Adidas"));
@@ -120,6 +118,9 @@ public class Controller {
         } else {
             System.out.println("Given file is NOT Microsoft Excel file!");
         }
+
+
+
     }
     public static ArrayList<Item> SearchByPriceLower(ArrayList<Item> pricelist, double retailPrice) {
         ArrayList<Item> temp = new ArrayList<>();

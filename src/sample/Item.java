@@ -44,4 +44,28 @@ public class Item {
               String.format("%10.1f", this.retailPrice) + ' ' + symbol;
 
    }
+
+   public int getId() {
+      return id;
+   }
+
+   public void setId(int id) {
+      this.id = id;
+   }
+
+   public String getTitle() {
+      return title;
+   }
+
+   public void setTitle(String title) {
+      this.title = title;
+   }
+
+   public double getRetailPrice() {
+      return retailPrice;
+   }
+
+   public void setRetailPrice(double retailPrice) {
+      this.retailPrice = retailPrice;
+   }
 }

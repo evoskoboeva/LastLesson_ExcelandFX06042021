@@ -6,8 +6,13 @@
 
 <GridPane alignment="center" hgap="10" prefHeight="239.0" prefWidth="353.0" stylesheets="@../sample/fullStructureCSS.css" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <TableView fx:id="tableView" prefHeight="200.0" prefWidth="353.0" />
-      <Button fx:id="btnLoad" mnemonicParsing="false" onAction="#Load" text="Load" GridPane.rowIndex="1" />
+      <TableView fx:id="tableView" prefHeight="200.0" prefWidth="353.0">
+         <columns>
+            <TableColumn fx:id="tableId" prefWidth="75.0" text="id" />
+            <TableColumn fx:id="tableDescription" prefWidth="168.0" text="descr" />
+            <TableColumn fx:id="tablePrice" prefWidth="86.0" text="price" />
+         </columns></TableView>
+      <Button fx:id="btnLoad" mnemonicParsing="false" onAction="#initialize" text="Load" GridPane.rowIndex="1" />
    </children>
    <rowConstraints>
       <RowConstraints />
