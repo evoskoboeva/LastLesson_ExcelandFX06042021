@@ -13,9 +13,11 @@
             <TableColumn fx:id="tablePrice" prefWidth="86.0" text="price" />
          </columns></TableView>
       <Button fx:id="btnLoad" mnemonicParsing="false" onAction="#initialize" text="Load" GridPane.rowIndex="1" />
+      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#export" text="Save" GridPane.rowIndex="2" />
    </children>
    <rowConstraints>
       <RowConstraints />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" />
    </rowConstraints>
    <columnConstraints>

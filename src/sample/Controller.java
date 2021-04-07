@@ -1,5 +1,6 @@
 package sample;
 
+import com.gembox.spreadsheet.SpreadsheetInfo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -14,14 +17,14 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 
+
 public class Controller {
+    static {
+        SpreadsheetInfo.setLicense("FREE-LIMITED-KEY");
+    }
     private ObservableList<Item> pricelist = FXCollections.observableArrayList();
 
     @FXML
@@ -37,7 +40,7 @@ public class Controller {
     @FXML
     private void initialize(ActionEvent actionEvent){
         Load();
-        //pricelist.add(new Item(123,"qwerty",150));
+        pricelist.add(new Item(123,"qwerty",150));
         tableId.setCellValueFactory(new PropertyValueFactory<Item,Integer>("id"));
         tableDescription.setCellValueFactory(new PropertyValueFactory<Item,String>("title"));
         tablePrice.setCellValueFactory(new PropertyValueFactory<Item,Double>("retailPrice"));
@@ -45,6 +48,42 @@ public class Controller {
 
 
     }
+
+
+        public void export(TableView<Item> tableView){
+
+
+
+
+        }
+
+
+    /*public void save(ActionEvent event) throws IOException {
+        ExcelFile file = new ExcelFile();
+        ExcelWorksheet worksheet = file.addWorksheet("sheet");
+        for (int row = 0; row < tableView.getItems().size(); row++) {
+           ObservableList cells = (ObservableList)tableView.getItems().get(row);
+            for (int column = 0; column < pricelist.indexOf(row); column++) {
+                if (cells.get(column) != null)
+
+            worksheet.getCell(row, column).setValue(cells.get(column).toString());
+
+        }
+        }
+        file.save("1.xls");
+    */   /* FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+              //  new FileChooser.ExtensionFilter("XLSX files (*.xlsx)", "*.xlsx"),
+                new FileChooser.ExtensionFilter("XLS files (*.xls)", "*.xls")
+              *//**//*  new FileChooser.ExtensionFilter("ODS files (*.ods)", "*.ods"),
+                new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv"),
+                new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html")
+        *//**//*);
+       *//* File saveFile = fileChooser.showSaveDialog(tableView.getScene().getWindow());
+
+        file.save(saveFile.getAbsolutePath());
+*/
+    //}
 
 
     public void Load() {
@@ -154,4 +193,47 @@ public class Controller {
 
     }
 
+    public void export(ActionEvent actionEvent) {
+
+        HSSFWorkbook hssfWorkbook=new HSSFWorkbook();
+        HSSFSheet hssfSheet=  hssfWorkbook.createSheet("Sheet1");
+        HSSFRow firstRow= hssfSheet.createRow(0);
+
+        ///set titles of columns
+        for (int i=0; i<tableView.getColumns().size();i++){
+
+            firstRow.createCell(i).setCellValue(tableView.getColumns().get(i).getText());
+
+        }
+
+
+        for (int row=0; row<tableView.getItems().size();row++){
+
+            HSSFRow hssfRow= hssfSheet.createRow(row+1);
+
+            for (int col=0; col<tableView.getColumns().size(); col++){
+
+                Object celValue = tableView.getColumns().get(col).getCellObservableValue(row).getValue();
+
+                try {
+                    if (celValue != null && Double.parseDouble(celValue.toString()) != 0.0) {
+                        hssfRow.createCell(col).setCellValue(Double.parseDouble(celValue.toString()));
+                    }
+                } catch (  NumberFormatException e ){
+
+                    hssfRow.createCell(col).setCellValue(celValue.toString());
+                }
+
+            }
+
+        }
+
+        //save excel file and close the workbook
+        try {
+            hssfWorkbook.write(new FileOutputStream("WorkBook.xls"));
+            hssfWorkbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

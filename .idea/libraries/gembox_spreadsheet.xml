@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="gembox-spreadsheet">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/GBS4j11v1256/gembox-spreadsheet.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

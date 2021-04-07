@@ -3,7 +3,7 @@ package sample;
 import java.util.Currency;
 import java.util.Locale;
 
-public class Item {
+public class Item  {
    int id;
    String title;
    double retailPrice;
@@ -68,4 +68,7 @@ public class Item {
    public void setRetailPrice(double retailPrice) {
       this.retailPrice = retailPrice;
    }
+
+
+
 }
